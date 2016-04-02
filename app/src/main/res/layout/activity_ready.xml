@@ -17,6 +17,7 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:visibility="invisible"
-        android:enabled="false"/>
+        android:enabled="false"
+        android:onClick="ready"/>
 
 </RelativeLayout>

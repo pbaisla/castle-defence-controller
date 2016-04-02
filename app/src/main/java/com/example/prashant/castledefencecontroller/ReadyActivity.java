@@ -25,7 +25,8 @@ import java.net.UnknownHostException;
 public class ReadyActivity extends AppCompatActivity {
     TextView status_message;
     Button ready_button;
-    static Handler connectHandler, uiHandler;
+    public static Handler connectHandler;
+    static Handler uiHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,11 @@ public class ReadyActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    public void ready(View v) {
+        Intent intent = new Intent(this, ControllerActivity.class);
+        startActivity(intent);
+    }
+
     private class Connect implements Runnable {
         Socket socket = null;
         DataOutputStream out = null;
@@ -96,7 +102,14 @@ public class ReadyActivity extends AppCompatActivity {
             connectHandler = new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
-
+                    Bundle bundle = msg.getData();
+                    String move = bundle.getString("move");
+                    Log.e("QWERTY", move);
+                    try {
+                        out.writeUTF(move);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             };
 
