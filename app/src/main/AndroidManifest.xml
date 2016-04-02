@@ -29,7 +29,9 @@
         <activity
             android:name=".ControllerActivity"
             android:label="@string/title_activity_controller"
-            android:parentActivityName=".ReadyActivity" >
+            android:parentActivityName=".ReadyActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ReadyActivity" />
