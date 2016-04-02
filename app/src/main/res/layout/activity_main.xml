@@ -22,5 +22,6 @@
         android:text="Connect"
         android:id="@+id/button"
         android:layout_below="@+id/editText"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="submit"/>
 </RelativeLayout>
