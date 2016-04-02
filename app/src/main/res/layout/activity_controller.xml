@@ -23,6 +23,19 @@
         android:text="right"
         android:id="@+id/right"
         android:onClick="moveright"
+        android:layout_alignTop="@+id/left"
+        android:layout_toRightOf="@+id/left"
+        android:layout_toEndOf="@+id/left"
+        android:layout_marginLeft="48dp"
+        android:layout_marginStart="48dp" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Shoot"
+        android:id="@+id/shoot"
+        android:onClick="shoot"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />

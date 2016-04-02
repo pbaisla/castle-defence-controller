@@ -38,4 +38,13 @@ public class ControllerActivity extends AppCompatActivity {
             connectHandler.sendMessage(msg);
         }
     }
+    public void shoot(View v) {
+        if (connectHandler != null) {
+            Message msg = connectHandler.obtainMessage();
+            Bundle bundle = new Bundle();
+            bundle.putString("move", "Shoot");
+            msg.setData(bundle);
+            connectHandler.sendMessage(msg);
+        }
+    }
 }
