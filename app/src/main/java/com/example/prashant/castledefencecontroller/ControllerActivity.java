@@ -66,6 +66,45 @@ public class ControllerActivity extends AppCompatActivity {
 
         });
 
+        Button rev_button = (Button) findViewById(R.id.reverse);
+        rev_button.setOnTouchListener(new View.OnTouchListener() {
+
+            private Handler mHandler;
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        if (mHandler != null) return true;
+                        mHandler = new Handler();
+                        mHandler.postDelayed(mAction, 250);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        if (mHandler == null) return true;
+                        mHandler.removeCallbacks(mAction);
+                        mHandler = null;
+                        break;
+                }
+                return false;
+            }
+
+            Runnable mAction = new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println("Performing action...");
+                    if (connectHandler != null) {
+                        Message msg = connectHandler.obtainMessage();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("move", "Reverse");
+                        msg.setData(bundle);
+                        connectHandler.sendMessage(msg);
+                    }
+                    mHandler.postDelayed(this, 250);
+                }
+            };
+
+        });
+
         Button left_button = (Button) findViewById(R.id.left);
         left_button.setOnTouchListener(new View.OnTouchListener() {
 
@@ -168,6 +207,15 @@ public class ControllerActivity extends AppCompatActivity {
             Message msg = connectHandler.obtainMessage();
             Bundle bundle = new Bundle();
             bundle.putString("move", "Shoot");
+            msg.setData(bundle);
+            connectHandler.sendMessage(msg);
+        }
+    }
+    public void reverse(View v) {
+        if (connectHandler != null) {
+            Message msg = connectHandler.obtainMessage();
+            Bundle bundle = new Bundle();
+            bundle.putString("move", "Reverse");
             msg.setData(bundle);
             connectHandler.sendMessage(msg);
         }
