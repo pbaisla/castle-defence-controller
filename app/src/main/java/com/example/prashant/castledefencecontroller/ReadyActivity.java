@@ -7,15 +7,11 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -33,10 +29,9 @@ public class ReadyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ready);
         Intent intent = getIntent();
-        String message = intent.getStringExtra(MainActivity.IP_ADDR);
-        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+        String ip_addr = intent.getStringExtra(MainActivity.IP_ADDR);
         status_message = (TextView) findViewById(R.id.status_message);
-        status_message.setText("Connecting to " + message);
+        status_message.setText("Connecting to " + ip_addr);
 
         ready_button = (Button) findViewById(R.id.ready_button);
 
@@ -52,7 +47,7 @@ public class ReadyActivity extends AppCompatActivity {
             }
         };
 
-        new Thread(new Connect()).start();
+        new Thread(new Connect(ip_addr)).start();
 
         Log.e("QWERTY", "Thread started");
     }
@@ -73,10 +68,15 @@ public class ReadyActivity extends AppCompatActivity {
         Socket socket = null;
         DataOutputStream out = null;
         BufferedReader in = null;
+        String ip_addr;
+
+        Connect(String ip_addr) {
+            this.ip_addr = ip_addr;
+        }
 
         public void run() {
             try {
-                socket = new Socket("192.168.43.221", 12345);
+                socket = new Socket(ip_addr, 12345);
                 out = new DataOutputStream(socket.getOutputStream());
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 out.writeUTF("Player connect");
