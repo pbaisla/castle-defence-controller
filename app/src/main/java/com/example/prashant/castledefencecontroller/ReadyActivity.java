@@ -1,6 +1,7 @@
 package com.example.prashant.castledefencecontroller;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -23,7 +25,8 @@ public class ReadyActivity extends AppCompatActivity {
     Button ready_button;
     public static Handler connectHandler;
     static Handler uiHandler;
-
+    String bgcolor = "white";
+    public final static String COLOR = "com.example.prashant.castledefencecontroller.COLOR";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,10 +42,14 @@ public class ReadyActivity extends AppCompatActivity {
             public void handleMessage(Message msg) {
                 Bundle bundle = msg.getData();
                 String connect_status = bundle.getString("connect_status");
+                String color = bundle.getString("color");
                 status_message.setText(connect_status);
                 if (connect_status.compareTo("Connected") == 0) {
                     ready_button.setEnabled(true);
                     ready_button.setVisibility(View.VISIBLE);
+                    RelativeLayout rl = (RelativeLayout) findViewById(R.id.view);
+                    rl.setBackgroundColor(Color.parseColor(color));
+                    bgcolor = color;
                 }
             }
         };
@@ -60,7 +67,15 @@ public class ReadyActivity extends AppCompatActivity {
     }
 
     public void ready(View v) {
+        if (connectHandler != null) {
+            Message msg = connectHandler.obtainMessage();
+            Bundle bundle = new Bundle();
+            bundle.putString("move", "Ready");
+            msg.setData(bundle);
+            connectHandler.sendMessage(msg);
+        }
         Intent intent = new Intent(this, ControllerActivity.class);
+        intent.putExtra(COLOR, bgcolor);
         startActivity(intent);
     }
 
@@ -82,11 +97,13 @@ public class ReadyActivity extends AppCompatActivity {
                 out.writeUTF("Player connect");
                 Log.e("QWERTY", "Message sent from app to server");
                 String response = in.readLine();
+                String color = in.readLine();
                 Log.e("QWERTY", "Message received from server " + response);
                 if (uiHandler != null) {
                     Message msg = uiHandler.obtainMessage();
                     Bundle bundle = new Bundle();
                     bundle.putString("connect_status", response);
+                    bundle.putString("color", color);
                     msg.setData(bundle);
                     uiHandler.sendMessage(msg);
                     Log.e("QWERTY", "Message sent to ui");
