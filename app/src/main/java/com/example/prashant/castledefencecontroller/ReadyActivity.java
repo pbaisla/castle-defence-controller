@@ -33,8 +33,11 @@ public class ReadyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ready);
         Intent intent = getIntent();
         String ip_addr = intent.getStringExtra(MainActivity.IP_ADDR);
+        String port_no = intent.getStringExtra(MainActivity.PORT);
+
+        Log.e("QWERTY", "ip:port " + ip_addr + ":" + port_no);
         status_message = (TextView) findViewById(R.id.status_message);
-        status_message.setText("Connecting to " + ip_addr);
+        status_message.setText("Connecting to " + ip_addr + ":" + port_no);
 
         ready_button = (Button) findViewById(R.id.ready_button);
 
@@ -54,7 +57,7 @@ public class ReadyActivity extends AppCompatActivity {
             }
         };
 
-        new Thread(new Connect(ip_addr)).start();
+        new Thread(new Connect(ip_addr, Integer.parseInt(port_no))).start();
 
         Log.e("QWERTY", "Thread started");
     }
@@ -84,14 +87,16 @@ public class ReadyActivity extends AppCompatActivity {
         DataOutputStream out = null;
         BufferedReader in = null;
         String ip_addr;
+        int port_no;
 
-        Connect(String ip_addr) {
+        Connect(String ip_addr, int port_no) {
             this.ip_addr = ip_addr;
+            this.port_no = port_no;
         }
 
         public void run() {
             try {
-                socket = new Socket(ip_addr, 12345);
+                socket = new Socket(ip_addr, port_no);
                 out = new DataOutputStream(socket.getOutputStream());
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 out.writeUTF("Player connect");

@@ -27,8 +27,8 @@ public class ControllerActivity extends AppCompatActivity {
         RelativeLayout rl = (RelativeLayout) findViewById(R.id.cview);
         rl.setBackgroundColor(Color.parseColor(color));
 
-        Button shoot_button = (Button) findViewById(R.id.shoot);
-        shoot_button.setOnTouchListener(new View.OnTouchListener() {
+        Button a_button = (Button) findViewById(R.id.a);
+        a_button.setOnTouchListener(new View.OnTouchListener() {
 
             private Handler mHandler;
 
@@ -56,7 +56,7 @@ public class ControllerActivity extends AppCompatActivity {
                     if (connectHandler != null) {
                         Message msg = connectHandler.obtainMessage();
                         Bundle bundle = new Bundle();
-                        bundle.putString("move", "Shoot");
+                        bundle.putString("move", "A");
                         msg.setData(bundle);
                         connectHandler.sendMessage(msg);
                     }
@@ -66,8 +66,8 @@ public class ControllerActivity extends AppCompatActivity {
 
         });
 
-        Button rev_button = (Button) findViewById(R.id.reverse);
-        rev_button.setOnTouchListener(new View.OnTouchListener() {
+        Button b_button = (Button) findViewById(R.id.b);
+        b_button.setOnTouchListener(new View.OnTouchListener() {
 
             private Handler mHandler;
 
@@ -95,11 +95,89 @@ public class ControllerActivity extends AppCompatActivity {
                     if (connectHandler != null) {
                         Message msg = connectHandler.obtainMessage();
                         Bundle bundle = new Bundle();
-                        bundle.putString("move", "Reverse");
+                        bundle.putString("move", "B");
                         msg.setData(bundle);
                         connectHandler.sendMessage(msg);
                     }
                     mHandler.postDelayed(this, 250);
+                }
+            };
+
+        });
+
+        Button up_button = (Button) findViewById(R.id.up);
+        up_button.setOnTouchListener(new View.OnTouchListener() {
+
+            private Handler mHandler;
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        if (mHandler != null) return true;
+                        mHandler = new Handler();
+                        mHandler.postDelayed(mAction, 100);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        if (mHandler == null) return true;
+                        mHandler.removeCallbacks(mAction);
+                        mHandler = null;
+                        break;
+                }
+                return false;
+            }
+
+            Runnable mAction = new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println("Performing action...");
+                    if (connectHandler != null) {
+                        Message msg = connectHandler.obtainMessage();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("move", "Up");
+                        msg.setData(bundle);
+                        connectHandler.sendMessage(msg);
+                    }
+                    mHandler.postDelayed(this, 100);
+                }
+            };
+
+        });
+
+        Button down_button = (Button) findViewById(R.id.down);
+        down_button.setOnTouchListener(new View.OnTouchListener() {
+
+            private Handler mHandler;
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        if (mHandler != null) return true;
+                        mHandler = new Handler();
+                        mHandler.postDelayed(mAction, 100);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        if (mHandler == null) return true;
+                        mHandler.removeCallbacks(mAction);
+                        mHandler = null;
+                        break;
+                }
+                return false;
+            }
+
+            Runnable mAction = new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println("Performing action...");
+                    if (connectHandler != null) {
+                        Message msg = connectHandler.obtainMessage();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("move", "Down");
+                        msg.setData(bundle);
+                        connectHandler.sendMessage(msg);
+                    }
+                    mHandler.postDelayed(this, 100);
                 }
             };
 
@@ -184,6 +262,24 @@ public class ControllerActivity extends AppCompatActivity {
         });
     }
 
+    public void moveup(View v) {
+        if (connectHandler != null) {
+            Message msg = connectHandler.obtainMessage();
+            Bundle bundle = new Bundle();
+            bundle.putString("move", "Up");
+            msg.setData(bundle);
+            connectHandler.sendMessage(msg);
+        }
+    }
+    public void movedown(View v) {
+        if (connectHandler != null) {
+            Message msg = connectHandler.obtainMessage();
+            Bundle bundle = new Bundle();
+            bundle.putString("move", "Down");
+            msg.setData(bundle);
+            connectHandler.sendMessage(msg);
+        }
+    }
     public void moveleft(View v) {
         if (connectHandler != null) {
             Message msg = connectHandler.obtainMessage();
@@ -202,20 +298,20 @@ public class ControllerActivity extends AppCompatActivity {
             connectHandler.sendMessage(msg);
         }
     }
-    public void shoot(View v) {
+    public void a(View v) {
         if (connectHandler != null) {
             Message msg = connectHandler.obtainMessage();
             Bundle bundle = new Bundle();
-            bundle.putString("move", "Shoot");
+            bundle.putString("move", "A");
             msg.setData(bundle);
             connectHandler.sendMessage(msg);
         }
     }
-    public void reverse(View v) {
+    public void b(View v) {
         if (connectHandler != null) {
             Message msg = connectHandler.obtainMessage();
             Bundle bundle = new Bundle();
-            bundle.putString("move", "Reverse");
+            bundle.putString("move", "B");
             msg.setData(bundle);
             connectHandler.sendMessage(msg);
         }

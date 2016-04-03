@@ -10,8 +10,10 @@ import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
     public final static String IP_ADDR = "com.example.prashant.castledefencecontroller.IP_ADDR";
+    public final static String PORT = "com.example.prashant.castledefencecontroller.PORT";
     private Button bt;
-    private EditText edTxt;
+    private EditText ip;
+    private EditText port;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,14 +21,17 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         bt = (Button) findViewById(R.id.button);
-        edTxt = (EditText) findViewById(R.id.editText);
+        ip = (EditText) findViewById(R.id.ip);
+        port = (EditText) findViewById(R.id.port);
 
     }
 
     public void submit(View v) {
         Intent intent = new Intent(this, ReadyActivity.class);
-        String message = edTxt.getText().toString();
-        intent.putExtra(IP_ADDR, message);
+        String ip_addr = ip.getText().toString();
+        intent.putExtra(IP_ADDR, ip_addr);
+        String port_no = port.getText().toString();
+        intent.putExtra(PORT, port_no);
         startActivity(intent);
     }
 
