@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:text="left"
         android:id="@+id/left"
-
+        android:padding="50dp"
         android:onClick="moveleft"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
@@ -24,11 +24,10 @@
         android:text="right"
         android:id="@+id/right"
         android:onClick="moveright"
+        android:padding="50dp"
         android:layout_alignTop="@+id/left"
         android:layout_toRightOf="@+id/left"
-        android:layout_toEndOf="@+id/left"
-        android:layout_marginLeft="48dp"
-        android:layout_marginStart="48dp" />
+        android:layout_toEndOf="@+id/left" />
 
     <Button
         android:layout_width="wrap_content"
@@ -36,6 +35,7 @@
         android:text="Shoot"
         android:id="@+id/shoot"
         android:onClick="shoot"
+        android:padding="50dp"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
@@ -46,9 +46,8 @@
         android:text="Reverse"
         android:id="@+id/reverse"
         android:onClick="reverse"
+        android:padding="50dp"
         android:layout_alignTop="@+id/shoot"
         android:layout_toLeftOf="@+id/shoot"
-        android:layout_toStartOf="@+id/shoot"
-        android:layout_marginRight="39dp"
-        android:layout_marginEnd="39dp" />
+        android:layout_toStartOf="@+id/shoot" />
 </RelativeLayout>
