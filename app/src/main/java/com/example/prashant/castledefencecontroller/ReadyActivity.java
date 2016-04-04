@@ -1,6 +1,7 @@
 package com.example.prashant.castledefencecontroller;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Looper;
@@ -30,6 +31,7 @@ public class ReadyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_ready);
         Intent intent = getIntent();
         String ip_addr = intent.getStringExtra(MainActivity.IP_ADDR);
